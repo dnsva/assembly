@@ -8,11 +8,11 @@
 section .data
 
     str_fizz db "Fizz", 0xA ; newline character
-    str_fizz_len equ $ - str
+    str_fizz_len equ $ - str_fizz
     str_buzz db "Buzz", 0xA ; newline character
-    str_buzz_len equ $ - str
+    str_buzz_len equ $ - str_buzz
     str_fizz_buzz db "FizzBuzz", 0xA ; newline character
-    str_fizz_buzz_len equ $ - str
+    str_fizz_buzz_len equ $ - str_fizz_buzz
 
 
 section .bss
@@ -30,33 +30,45 @@ loop:
 
     ;INCREMENT i
     inc edi ; i++
+    ;----------------------------------------------------------------
 
     ; check if the number is divisible by 3
     xor eax, eax ; clear eax
+    xor ebx, ebx ; clear ebx
     xor edx, edx ; clear edx
 
     mov eax, edi ; the curr number (i)
-    div 3 ; divide by 3
+    mov ebx, 3 ; to divide by 3
+    div ebx ; divide by 3
     and edx, edx ; check if the remainder is 0
     jz divisible_by_3 ; if the remainder is 0, jump to divisible_by_3
+    ;----------------------------------------------------------------
 
     ; check if the number is divisible by 5
     xor eax, eax ; clear eax
+    xor ebx, ebx ; clear ebx
     xor edx, edx ; clear edx
+
     mov eax, edi ; the curr number (i)
-    div 5 ; divide by 5
+    mov ebx, 5 ; to divide by 5
+    div ebx ; divide by 5
     and edx, edx ; check if the remainder is 0
     jz divisible_by_5 ; if the remainder is 0, jump to divisible_by_5
+    ;----------------------------------------------------------------
 
 divisible_by_3:
 
-    ;Check if ALSO divisible by 5
+    ;Check if ALSO divisible by 5!!!!!!!!!!!!!!!!!!
     xor eax, eax ; clear eax
+    xor ebx, ebx ; clear ebx
     xor edx, edx ; clear edx
+
     mov eax, edi ; the curr number (i)
-    div 5 ; divide by 5
+    mov ebx, 5 ; to divide by 5
+    div ebx ; divide by 5
     and edx, edx ; check if the remainder is 0
     jz divisible_by_3_and_5 ; if the remainder is 0, jump to divisible_by_3_and_5
+    ;----------------------------------------------------------------
 
     ; print "Fizz"
     mov eax, 4 ; sys_write
