@@ -30,6 +30,11 @@ loop:
 
     ;INCREMENT i
     inc edi ; i++
+
+    ;EXIT CONDITION:
+    cmp edi, 100 ; check if i is 100
+    jg exit ; if i is greater than 100, jump to exit
+
     ;----------------------------------------------------------------
 
     ; check if the number is divisible by 3
@@ -54,6 +59,7 @@ loop:
     div ebx ; divide by 5
     and edx, edx ; check if the remainder is 0
     jz divisible_by_5 ; if the remainder is 0, jump to divisible_by_5
+    jnz print_number ; if the remainder is not 0, jump to print_number
     ;----------------------------------------------------------------
 
 divisible_by_3:
@@ -99,3 +105,20 @@ divisible_by_3_and_5:
 
     jmp loop ; continue to the next number
     
+print_number:
+    ; print the number
+
+    add edi, '0' ; convert the number to a character
+    mov eax, 4 ; sys_write
+    mov ebx, 1 ; stdout
+    mov ecx, [edi] ; the curr number (i) CHAR AT
+    mov edx, 1 ; length of the number
+    int 0x80 ; syscall
+
+    jmp loop ; continue to the next number
+
+exit:
+    ; exit
+    mov eax, 1 ; sys_exit
+    xor ebx, ebx ; exit code
+    int 0x80 ; syscall
