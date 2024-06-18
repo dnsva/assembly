@@ -14,19 +14,19 @@ section .data
     str_fizz_buzz db "FizzBuzz", 0xA ; newline character
     str_fizz_buzz_len equ $ - str_fizz_buzz
 
-    format db "%d\n", 0 ; format string for printing the number
+    format db "%d\n", 0xA,  0 ; format string for printing the number
 
 
 section .bss
 
-global _start
+global main
 
 section .text
 
-default rel;
+
 extern printf ; from C library
 
-_start:
+main:
     ; eax, ebx, ecx, edx = sys_write
     ; edi = i loop cuonter
     xor edi, edi ; i = 0
@@ -117,8 +117,8 @@ print_number:
 
     push edi
     push format
-    ;call printf
-    call printf wrt ..plt
+   call printf
+   ; call printf wrt ..plt
     add esp, 8 ; 2*4 bytes
 
     jmp loop ; continue to the next number
