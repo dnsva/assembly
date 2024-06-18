@@ -14,12 +14,17 @@ section .data
     str_fizz_buzz db "FizzBuzz", 0xA ; newline character
     str_fizz_buzz_len equ $ - str_fizz_buzz
 
+    format db "%d\n", 0 ; format string for printing the number
+
 
 section .bss
 
 global _start
 
 section .text
+
+default rel;
+extern printf ; from C library
 
 _start:
     ; eax, ebx, ecx, edx = sys_write
@@ -108,12 +113,13 @@ divisible_by_3_and_5:
 print_number:
     ; print the number
 
-    add edi, '0' ; convert the number to a character
-    mov eax, 4 ; sys_write
-    mov ebx, 1 ; stdout
-    mov ecx, [edi] ; the curr number (i) CHAR AT
-    mov edx, 1 ; length of the number
-    int 0x80 ; syscall
+    ; i want to print edi
+
+    push edi
+    push format
+    ;call printf
+    call printf wrt ..plt
+    add esp, 8 ; 2*4 bytes
 
     jmp loop ; continue to the next number
 
