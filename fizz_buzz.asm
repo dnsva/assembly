@@ -14,7 +14,7 @@ section .data
     str_fizz_buzz db "FizzBuzz", 0xA ; newline character
     str_fizz_buzz_len equ $ - str_fizz_buzz
 
-    format db "%d\n", 0xA,  0 ; format string for printing the number
+    format db "%d", 0xA,  0 ; format string for printing the number
 
 
 section .bss
